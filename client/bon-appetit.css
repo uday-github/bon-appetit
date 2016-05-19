@@ -1,0 +1,11 @@
+/* CSS declarations go here */
+.top-margin {
+	margin-top: 70px;
+}
+
+.region-image {
+	min-height:300px;
+    max-height:300px;
+    border: solid 1px gray;
+    padding: 10px;
+}

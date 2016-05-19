@@ -1,0 +1,128 @@
+<head>
+  <title>Bon-Appetit</title>
+</head>
+
+<body>
+	<!--
+	 {{> navbar}}
+	 {{> choice_form}}
+	 {{> info_Display}} 
+	 -->
+</body>
+
+<template name = "ApplicationLayout">
+	{{> yield "navbar"}}
+  	{{> yield "main"}}
+</template>
+
+
+<template name = "display">
+	 {{> choice_form}}
+ {{#if invalidContinent}}
+ 		{{> invalid_continent}}
+ {{else}}			 
+	 	{{> info_Display}} 
+ {{/if}}
+
+</template>
+
+<template name = "navbar">
+	<nav class="navbar navbar-default navbar-fixed-top">
+  		<div class="container">
+    		<a class="navbar-brand" href="#">BonAppetit</a>
+  		</div> <!-- / nav container -->
+	</nav> 
+</template>
+
+<template name = "welcome">
+	<div class = "container">
+		<div class = "jumbotron">
+			<h1> Welcome to Bon Appetit ! </h1>
+			<p> Enter a continent of your choice ! and the location where you want to try and get a random choice from 
+				our list with some facts about the place and cuisine and a YELP link to the restaurants in the location ! </p>
+				<a class = "btn btn-primary btn-large" href = "/random-choice" role = button> Enter the application </a>
+		</div><!--/jumbotron -->
+	</div><!--/container-->
+</template>
+
+
+<template name = "choice_form">
+	<div class = "container top-margin">	
+		<form class = "js-submit-choice">
+			<div class = "form-group">
+				<label for ="Continent"> Continent </label>
+				<input type = "text" class ="form-control" id = "Continent" placeholder = "Enter North-America for North America,South-America for South America, Asiana for Asia, Africana for Africa, Europe for Europe or Oceania for Oceanic Islands">
+			</div>
+
+			<div class = "form-group">
+				<label for ="Location"> Location </label>
+				<input type = "text" class ="form-control" id = "Location" placeholder = "e.g. San Francisco, CA">
+			</div>
+
+			<button type = "submit" class = "btn btn-default"> Submit </button>
+		</form>
+	</div>
+</template> <!-- /choice_form -->
+
+
+<template name = "info_Display">
+	{{#if continentStatus}}
+	    <div class = "container">
+			<h2> Hola! The cuisine to try today is from {{getRegion.Country}} </h2>
+			<p> This is the Cuisine name : {{getRegion.Cuisine_name}} </p>
+			<div class = "row">
+				<div class = "col-md-6 col-xs-12">
+					<img class = "region-image" src = "{{getRegion.img_src_1}}">
+				</div>
+				<div class = "col-md-6 col-xs-12">
+					<img class = "region-image" src = "{{getRegion.img_src_2}}">
+				</div>
+			</div> <!--/row-->
+			<h3> A little info:</h3> {{getRegion.About}}
+			<h3> Dishes to look forward to! </h3>
+			<div class = "row">
+				<div class = "col-md-6 col-xs-12">
+					<ul>
+						<h3> For the veggies : </h3>
+					    {{#each getRegion.Dishes_veg}}
+					     <li>
+					        {{text}}
+					     </li>
+					    {{/each}}
+		    		</ul>
+    			</div> <!--/ col -->
+
+    			<div class = "col-md-6 col-xs-12">
+    				<ul>
+						<h3> For the Meat lovers : </h3>
+					    {{#each getRegion.Dishes_non_veg}}
+					     <li>
+					        {{text}}
+					     </li>
+					    {{/each}}
+		    		</ul>
+    			</div> <!--/ col -->
+    		</div>	<!--/ row -->
+
+		<h3> Yelp Link : </h3> 
+			{{#if localeStatus}}
+				<p> <a href = " http://www.yelp.com/search?find_desc={{getRegion.Cuisine_name}} Cuisine&find_loc= {{getLocation}}" target="_blank"> Yelp Link </a> </p>	
+			{{else}}
+			    <p> Enter a location to see the Yelp Link of restaurants in your area ! </p>
+			{{/if}}
+		</div> <!-- /container -->
+	{{/if}}
+</template> <!-- info_Display -->
+
+<template name = "invalid_continent">
+	  <div class = "container">
+	    	<h2> Enter a continent name as listed on the form placeholder and location where you would like to find a restaurant! </h2>	
+	  </div>
+</template>
+
+<template name="dish">
+  <li>{{text}}</li>
+</template>
+
+
+
